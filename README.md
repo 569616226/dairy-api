@@ -20,6 +20,6 @@ mongod --dbpath
 node app
 ```
 
-##前台界面
+## 前台界面
 
 [vue-dairy](https://github.com/xuyd/vue-dairy)
