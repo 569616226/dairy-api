@@ -22,4 +22,4 @@ node app
 
 ##前台界面
 
-https://github.com/xuyd/vue-dairy
+[vue-dairy](https://github.com/xuyd/vue-dairy)
