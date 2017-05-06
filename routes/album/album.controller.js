@@ -62,10 +62,12 @@ exports.photoList = function (req, res) {
 		status: {$gt: 0},
 		created: {$lt: date }
 	};
-	Album.findAsync(condition, 'photo thumbnail created likeCount', {
+	Album.find(condition, 'userId photo thumbnail created likeCount', {
 		sort: {created: -1},
 		limit: 20
-	}).then(function (photo) {
+	}).populate('userId','nickname')
+		.exec()
+		.then(function (photo) {
 		return res.status(200).send({
 			photo: photo
 		})

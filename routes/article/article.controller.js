@@ -39,7 +39,8 @@ exports.addArticle = function (req,res) {
         tag: tag,
         status: status
     };
-    if(image) {
+
+    if(image && (image.substr(0, config.root.length) == config.root)) {
         data.image = config.root + '/public/uploads/thumbnail' + image.substr(image.lastIndexOf('/'), image.length);
     }
     Article.createAsync(data).then(function (article) {
@@ -284,6 +285,7 @@ exports.editArticle = function (req,res) {
     var title = req.body.title;
     var content = req.body.content;
     var weather = req.body.weather;
+    var image = req.body.image;
     var errorMsg;
     if(title) title = title.trim();
     if(weather) weather = weather.trim();
@@ -296,6 +298,12 @@ exports.editArticle = function (req,res) {
     }
     if(errorMsg){
         return res.status(401).send({errorMsg: errorMsg});
+    }
+
+    if(image && (image.substr(0, config.root.length) == config.root)) {
+        req.body.image = config.root + '/public/uploads/thumbnail' + image.substr(image.lastIndexOf('/'), image.length);
+    }else{
+        req.body.image = undefined;
     }
     Article.findByIdAsync(aid).then(function (article) {
         if(id != article.authId){
